@@ -7,18 +7,26 @@ package peluqueriacanina1.ui;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import peluqueriacanina1.logica.Controlador;
+import peluqueriacanina1.logica.Mascota;
 
 /**
  *
  * @author cafu1
  */
-public class CargarDatos extends javax.swing.JFrame {
- Controlador Control = new Controlador();
+          
+public class ModificarDatos extends javax.swing.JFrame {
+Controlador Control = null;
+int num_cliente;
+  Mascota masco;
+
     /**
      * Creates new form CargarDatos
      */
-    public CargarDatos() {
+    public ModificarDatos(int num_cliente){
+  Control = new Controlador();
+  //this.num_cliente = num_cliente;
         initComponents();
+      cargarDatos(num_cliente);
     }
 
     
@@ -52,7 +60,7 @@ public class CargarDatos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cargar Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Black", 0, 36))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Modificar Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Black", 0, 36))); // NOI18N
 
         jLabel1.setText("Nombre Mascota");
 
@@ -91,7 +99,7 @@ public class CargarDatos extends javax.swing.JFrame {
             }
         });
 
-        BtnGuardar.setText("guardar");
+        BtnGuardar.setText("guardarCambios");
         BtnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnGuardarActionPerformed(evt);
@@ -128,8 +136,8 @@ public class CargarDatos extends javax.swing.JFrame {
                                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE))))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                     .addComponent(BtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(107, 107, 107)
-                                    .addComponent(BtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(99, 99, 99)
+                                    .addComponent(BtnGuardar))
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(42, 42, 42)
@@ -257,7 +265,7 @@ public class CargarDatos extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnLimpiarActionPerformed
 
     private void BtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarActionPerformed
-              
+           
        String nombreMasco = TxtNmascota.getText();
        String raza = TxtRmascota.getText();
        String color = TxtCmascota.getText();
@@ -267,9 +275,17 @@ public class CargarDatos extends javax.swing.JFrame {
        String celularDue = TxtCdueño.getText();
        String oserbaciones = TxtOserbaciones.getText();
 
-      Control.guardar(nombreMasco,raza,color,alergico,aespecial,nombreDue,celularDue,oserbaciones);
+      Control.mdificarMascota(masco, nombreMasco, raza, color, alergico, aespecial, nombreDue, celularDue, oserbaciones);
           
-           JOptionPane.showMessageDialog(this,"Registro de datos exitoso","guardado",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,"Registro modificado exitosamente","guardado",JOptionPane.INFORMATION_MESSAGE);
+              //cerrar ventana
+                Verdatos pantalla = new Verdatos();
+                pantalla.setVisible(true);
+                pantalla.setLocationRelativeTo(null);
+
+                this.dispose();
+              
+            
 
     }//GEN-LAST:event_BtnGuardarActionPerformed
 
@@ -307,4 +323,36 @@ public class CargarDatos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarDatos(int num_cliente) {
+        this.masco = Control.traerMascota(num_cliente);
+     TxtNmascota.setText(masco.getNombre_mascota());
+        TxtRmascota.setText(masco.getRaza());
+        TxtCmascota.setText(masco.getColor());
+
+        if(masco.getAlergico().equals("SI")){
+        Cmbalergico.setSelectedIndex(1);
+       }
+        else{
+           if(masco.getAlergico().equals("NO")){
+       Cmbalergico.setSelectedIndex(2);
+}
+}
+
+
+            if(masco.getAtencion_especial().equals("SI")){
+        CmbAespecial.setSelectedIndex(1);
+        }
+          else{
+           if(masco.getAtencion_especial().equals("NO")){
+       CmbAespecial.setSelectedIndex(2);
+}
+}
+
+        TxtNdueño.setText(masco.getUnDueño().getNombre());
+        TxtCdueño.setText(masco.getUnDueño().getCelDueño());
+        TxtOserbaciones.setText(masco.getObservaciones());
+
+
+    }
 }

@@ -4,8 +4,15 @@
  */
 package peluqueriacanina1.persitencia;
 
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import peluqueriacanina1.logica.Dueño;
 import peluqueriacanina1.logica.Mascota;
+import peluqueriacanina1.persitencia.exceptions.NonexistentEntityException;
+
+
 
 /**
  *
@@ -27,7 +34,44 @@ public class ControladorPersistencia {
 
     }
 
+    public List<Mascota> traerMascota() {
+     return mascotaJpa.findMascotaEntities();
+    }
 
+    public void borrarMascota(int num_cliente)   {
+                   
+             try{
+          mascotaJpa.destroy(num_cliente);
+     }catch(NonexistentEntityException ex ){
+        Logger.getLogger(ControladorPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+     } 
+              
+      
+         }
 
+    public Mascota traerMascota(int num_cliente) {
+        
+             return mascotaJpa.findMascota(num_cliente);
 
+    }
+
+    public void mdificarMascota(Mascota masco) {
+         try {
+        mascotaJpa.edit(masco);
+ } catch(Exception ex){
+           Logger.getLogger(ControladorPersistencia.class.getName()).log(Level.SEVERE,null,ex);
 }
+    }
+
+    public Dueño traerDueño(int id_dueño) {
+        return  dueñoJpa.findDueño(id_dueño);
+    }
+
+    public void modificarDueño(Dueño dueño) {
+                 try {
+            dueñoJpa.edit(dueño);
+        } catch(Exception ex){
+           Logger.getLogger(ControladorPersistencia.class.getName()).log(Level.SEVERE,null,ex);
+}
+    }
+              }

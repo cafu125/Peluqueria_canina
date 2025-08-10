@@ -41,6 +41,11 @@ public class Principal extends javax.swing.JFrame {
         });
 
         BtnVdatos.setText("Ver Datos");
+        BtnVdatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnVdatosActionPerformed(evt);
+            }
+        });
 
         BtnSsistema.setText("Salir del sistema");
 
@@ -136,6 +141,15 @@ public class Principal extends javax.swing.JFrame {
                Pantalla.setLocationRelativeTo(null);
         
     }//GEN-LAST:event_BtnCdatosActionPerformed
+
+    private void BtnVdatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVdatosActionPerformed
+        // TODO add your handling code here:
+
+  Verdatos Pantalla =new Verdatos();
+              Pantalla.setVisible(true);
+               Pantalla.setLocationRelativeTo(null);
+
+    }//GEN-LAST:event_BtnVdatosActionPerformed
 
     /**
      * @param args the command line arguments
